@@ -7,7 +7,9 @@ const {
   ActivityType,
   Client,
   Collection,
-  GatewayIntentBits
+  GatewayIntentBits,
+  REST,
+  Routes
 } = require('discord.js');
 
 const { getConfig } = require('./config');
@@ -16,6 +18,22 @@ const { GuildMusicManager } = require('./music/manager');
 const { createSpotifyResolver } = require('./music/spotify');
 
 const cfg = getConfig();
+
+async function maybeRegisterCommands() {
+  if (process.env.AUTO_REGISTER_COMMANDS !== '1') return;
+
+  const rest = new REST({ version: '10' }).setToken(cfg.discordToken);
+  const body = commands.map((c) => c.data.toJSON());
+
+  if (cfg.discordGuildId) {
+    await rest.put(Routes.applicationGuildCommands(cfg.discordClientId, cfg.discordGuildId), { body });
+    console.log(`Auto-registered ${body.length} guild commands for ${cfg.discordGuildId}`);
+    return;
+  }
+
+  await rest.put(Routes.applicationCommands(cfg.discordClientId), { body });
+  console.log(`Auto-registered ${body.length} global commands (propagation may take time)`);
+}
 
 const spotifyResolver = createSpotifyResolver({
   clientId: cfg.spotifyClientId,
@@ -45,7 +63,7 @@ client.once('ready', async () => {
   client.user.setPresence({
     activities: [
       {
-        name: 'Cyrus ❤ Beyaz',
+        name: 'Developed By Cyrus',
         type: ActivityType.Streaming,
         url: 'https://twitch.tv/discord'
       }
@@ -132,4 +150,6 @@ client.on('interactionCreate', async (interaction) => {
   }
 });
 
-client.login(cfg.discordToken);
+maybeRegisterCommands()
+  .catch((e) => console.warn('Command register failed:', e?.message || e))
+  .finally(() => client.login(cfg.discordToken));
