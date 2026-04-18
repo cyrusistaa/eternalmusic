@@ -36,7 +36,7 @@ class GuildMusicManager {
       channelId: voiceChannel.id,
       guildId: voiceChannel.guild.id,
       adapterCreator: voiceChannel.guild.voiceAdapterCreator,
-      selfDeaf: false,
+      selfDeaf: true,
       selfMute: false
     });
     conn.subscribe(this.player);
@@ -104,4 +104,3 @@ class GuildMusicManager {
 }
 
 module.exports = { GuildMusicManager };
-
