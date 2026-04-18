@@ -1,0 +1,23 @@
+{
+  "name": "discord-music-bot",
+  "version": "1.0.0",
+  "description": "Discord music bot (Railway + GitHub) with idle voice + streaming presence",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "register": "node scripts/register-commands.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@discordjs/opus": "^0.10.0",
+    "@discordjs/voice": "^0.18.0",
+    "discord.js": "^14.19.0",
+    "dotenv": "^16.5.0",
+    "ffmpeg-static": "^5.2.0",
+    "opusscript": "^0.1.1",
+    "play-dl": "^1.9.7",
+    "spotify-web-api-node": "^5.0.2"
+  }
+}
