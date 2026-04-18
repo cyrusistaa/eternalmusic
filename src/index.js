@@ -63,7 +63,7 @@ client.once('ready', async () => {
   client.user.setPresence({
     activities: [
       {
-        name: 'Developed By Cyrus',
+        name: 'Cyrus ❤ Beyaz',
         type: ActivityType.Streaming,
         url: 'https://twitch.tv/discord'
       }
