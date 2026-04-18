@@ -1,0 +1,5 @@
+[variables]
+# Node 22 üzerinde bazı native paketler (özellikle opus encoder) sorun çıkarabiliyor.
+# Railway/Nixpacks'in Node sürümünü 20 LTS'e sabitle.
+NIXPACKS_NODE_VERSION = "20"
+
